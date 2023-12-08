@@ -52,6 +52,14 @@ Options:
 [INFO]: File upload completed => baseUrl: https://gnfd-testnet-sp3.nodereal.io/view/testcli1/test.txt
 ```
 
-# DISCLAIMER
+## Contributing
+
+If you want to contribute to GNFD Deploy or have suggestions, feel free to open an issue or submit a pull request.
+
+## License
+
+This project is licensed under the LGPL-3.0 License - see the [LICENSE.md](./LICENSE) file for details.
+
+## DISCLAIMER
 
 The software and related documentation are under active development, all subject to potential future change without notification and not ready for production use. The code and security audit have not been fully completed and not ready for any bug bounty. We advise you to be careful and experiment on the network at your own risk. Stay safe out there.
