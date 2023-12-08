@@ -50,8 +50,6 @@ const uploadDir = async (bucketName: string, folderPath: string) => {
 
 export const upload = async (filePath: string) => {
   try {
-    logger.info('Start upload file:', filePath);
-
     const bucketName = BUCKET_NAME;
     // #1. Create bucket
     const bucketInfo = await createBucket(bucketName);

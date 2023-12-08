@@ -1,8 +1,8 @@
-import { Client } from '@bnb-chain/greenfield-js-sdk'
+import { Client } from '@bnb-chain/greenfield-js-sdk';
 
 const client = Client.create(
-  process.env.GREENFIELD_RPC_URL || "",
-  process.env.GREENFIELD_CHAIN_ID || "",
+  process.env.GREENFIELD_RPC_URL || '',
+  process.env.GREENFIELD_CHAIN_ID || '',
 );
 
 const getSps = async () => {
@@ -43,8 +43,4 @@ const randomString = (length: number) => {
   return result;
 };
 
-export {
-  client,
-  selectSp,
-  randomString,
-};
+export { client, selectSp, randomString };

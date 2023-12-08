@@ -13,21 +13,6 @@ npm install @bnb-chain/gnfd-deploy -g
 yarn global add @bnb-chain/gnfd-deploy
 ```
 
-## Environment Variables
-
-Set the following environment variables based on the information in the [env.example](./.env.example) file:
-
-```bash
-ACCOUNT_ADDRESS="your wallet address"
-ACCOUNT_PRIVATE_KEY="your private key"
-BUCKET_NAME=testcli1
-
-# greenfield network info is required:
-GREENFIELD_RPC_URL=https://gnfd-testnet-fullnode-tendermint-ap.bnbchain.org
-GREENFIELD_CHAIN_ID=5600
-...
-```
-
 ## Usage
 
 ```bash
@@ -38,20 +23,39 @@ Usage: gnfd-deploy [path] [options]
 Zero-Config CLI to Deploy Static Websites to BNB Greenfield
 
 Arguments:
-  path           a relative file or directory local path.
+  path                   A local file or folder relative or absolute path.
 
 Options:
-  -V, --version  output the version number
-  -d, --debug    use debug mode to see full error.
-  -h, --help     display help for command
+  -a, --addr [addr]      a Greenfield network address starting with '0x'
+  -k, --key [key]        private key for a Greenfield network account starting with '0x'.
+  -b, --bucket [bucket]  a bucket name similar to AWS S3
+  -d, --debug            use debug mode to see full error.
+  -m, --mainnet          upload file to Greenfield mainnet network.[testnet]
+  -V, --version          output the version number
+  -h, --help             display help for command
+```
+
+## Using Environment Variables (Optional)
+
+Set the following environment variables based on the information in the [env.example](./.env.example) file:
+
+```bash
+ACCOUNT_ADDRESS="your wallet address"
+ACCOUNT_PRIVATE_KEY="your private key"
+BUCKET_NAME=testcli1
+
+# optional, default is testnet. more infos: https://docs.bnbchain.org/greenfield-docs/docs/api/endpoints
+GREENFIELD_RPC_URL=https://gnfd-testnet-fullnode-tendermint-ap.bnbchain.org
+GREENFIELD_CHAIN_ID=5600
 ```
 
 ### Upload a file or folder
 
 ```bash
-> gnfd your-local-path
+# if you have not set the env variables.
+> gnfd your-local-path --key=0xyourtestprivatekey --addr=0xyourtestaddress --bucket=testcli1
 
-[INFO]: Start upload file: /tmp/test.txt
+[INFO]: Start upload file to https://gnfd-testnet-fullnode-tendermint-ap.bnbchain.org 5600
 [INFO]: Checking a bucketName for testcli1
 [INFO]: The bucketName testcli1 already exist. skipped
 [INFO]: Checking an object for test.txt
