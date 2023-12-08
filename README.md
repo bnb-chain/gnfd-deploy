@@ -13,6 +13,21 @@ npm install @bnb-chain/gnfd-deploy -g
 yarn global add @bnb-chain/gnfd-deploy
 ```
 
+## Environment Variables
+
+Set the following environment variables based on the information in the [env.example](./.env.example) file:
+
+```bash
+ACCOUNT_ADDRESS="your wallet address"
+ACCOUNT_PRIVATE_KEY="your private key"
+BUCKET_NAME=testcli1
+
+# greenfield network info is required:
+GREENFIELD_RPC_URL=https://gnfd-testnet-fullnode-tendermint-ap.bnbchain.org
+GREENFIELD_CHAIN_ID=5600
+...
+```
+
 ## Usage
 
 ```bash

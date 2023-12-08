@@ -35,7 +35,7 @@ const uploadDir = async (bucketName: string, folderPath: string) => {
           const pr = path.relative(rootDir, filePath);
           await createObject({
             bucketName,
-            filePath: pr,
+            filePath,
             objectName: pr,
           });
         }
