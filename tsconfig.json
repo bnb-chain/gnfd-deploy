@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "target": "ESNext",
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "strict": true,
+    "noImplicitAny": false,
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "module": "CommonJS",
+    "skipLibCheck": true,
+    "strictPropertyInitialization": false,
+  },
+  "include": ["src"]
+}

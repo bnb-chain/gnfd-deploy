@@ -1,0 +1,44 @@
+{
+  "name": "@bnbc-chain/gnfd-deploy",
+  "version": "0.0.1",
+  "description": "Zero-Config CLI to Deploy Static Websites to BNB Greenfield",
+  "keywords": [
+    "bnb",
+    "bsc",
+    "greenfield",
+    "upload",
+    "static-site-generator",
+    "deploy"
+  ],
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "tsc && node ./dist/cli.js"
+  },
+  "bin": {
+    "gnfd": "dist/cli.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
+  },
+  "author": "BNB Chain",
+  "license": "LGPL-3.0-only",
+  "devDependencies": {
+    "@types/mime-types": "^2.1.4",
+    "@types/node": "^20.10.3",
+    "chalk": "4.1.2",
+    "commander": "^11.1.0",
+    "dotenv": "^16.3.1",
+    "loglevel": "^1.8.1"
+  },
+  "dependencies": {
+    "@bnb-chain/greenfield-js-sdk": "^1.0.6",
+    "@bnb-chain/greenfiled-file-handle": "^1.0.2",
+    "mime-types": "^2.1.35",
+    "typescript": "^4.7.2"
+  }
+}
