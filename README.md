@@ -39,7 +39,7 @@ Options:
 
 Set the following environment variables based on the information in the [env.example](./.env.example) file:
 
-```bash
+```dotenv
 ACCOUNT_ADDRESS="your wallet address"
 ACCOUNT_PRIVATE_KEY="your private key"
 BUCKET_NAME=testcli1

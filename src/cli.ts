@@ -27,12 +27,13 @@ program
     '-k, --key [key]',
     "private key for a Greenfield network account starting with '0x'.",
   )
-  .option('-b, --bucket [bucket]', 'a bucket name similar to AWS S3')
+  .option('-b, --bucket [bucket]', 'a bucket name similar to AWS S3.')
   .option('-d, --debug', 'use debug mode to see full error.')
   .option(
     '-m, --mainnet',
     'upload file to Greenfield mainnet network.[testnet]',
   )
+  .option('--delete [objectName]', 'delete a file by objectName.')
   .version(pkg.version);
 
 program.exitOverride(() => process.exit());
@@ -78,22 +79,27 @@ if (
   process.exit();
 }
 
-const fPath = args[0];
-if (!fPath) {
-  logger.error('path is required.');
-  process.exit();
-}
-
-const filePath = path.resolve(fPath);
-if (fs.existsSync(filePath)) {
-  logger.info(
-    'Start upload file to:',
-    process.env.GREENFIELD_RPC_URL,
-    process.env.GREENFIELD_CHAIN_ID,
-  );
-
-  const { upload } = require('./core/upload');
-  upload(filePath);
+if (opts.delete) {
+  const { deleteFile } = require('./core/upload');
+  deleteFile(opts.delete);
 } else {
-  logger.error(`No such file or directory: ${chalk.cyan(filePath)}`);
+  const fPath = args[0];
+  if (!fPath) {
+    logger.error('path is required.');
+    process.exit();
+  }
+
+  const filePath = path.resolve(fPath);
+  if (fs.existsSync(filePath)) {
+    logger.info(
+      'Start upload file to:',
+      process.env.GREENFIELD_RPC_URL,
+      process.env.GREENFIELD_CHAIN_ID,
+    );
+
+    const { upload } = require('./core/upload');
+    upload(filePath);
+  } else {
+    logger.error(`No such file or directory: ${chalk.cyan(filePath)}`);
+  }
 }

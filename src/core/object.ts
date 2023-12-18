@@ -22,8 +22,11 @@ export const createObject = async ({
   const fileBuffer = fs.readFileSync(filePath);
   const extname = path.extname(filePath);
   const fileType = mimeTypes.lookup(extname);
+
+  logger.debug('check sums start:', filePath);
   const hashResult = await getCheckSums(fileBuffer);
   const { contentLength, expectCheckSums } = hashResult;
+  logger.debug('check sums end:', filePath);
 
   try {
     logger.info('Checking an object for', chalk.cyan(objectName));
@@ -32,6 +35,7 @@ export const createObject = async ({
     logger.debug('The objectName:', objectName, existObject);
     logger.info(`The object ${chalk.cyan(objectName)} already exist. skipped`);
   } catch (error) {
+    logger.debug('The objectName:', objectName, error);
     logger.info('Creating an object for', chalk.cyan(objectName));
 
     // #2 create object.
@@ -141,4 +145,37 @@ export const createFolder = async ({
       logger.info('Folder created successfully: ', res.transactionHash);
     }
   }
+};
+
+export const deleteObject = async ({
+  bucketName,
+  objectName,
+}: {
+  bucketName: string;
+  objectName: string;
+}) => {
+  const deleteTx = await client.object.deleteObject({
+    bucketName: bucketName,
+    objectName: objectName,
+    operator: ACCOUNT_ADDRESS,
+  });
+
+  const simulateInfo = await deleteTx.simulate({
+    denom: 'BNB',
+  });
+
+  const res = await deleteTx.broadcast({
+    denom: 'BNB',
+    gasLimit: Number(simulateInfo?.gasLimit),
+    gasPrice: simulateInfo?.gasPrice || '5000000000',
+    payer: ACCOUNT_ADDRESS,
+    granter: '',
+    privateKey: ACCOUNT_PRIVATE_KEY,
+  });
+
+  if (res.code !== 0) {
+    throw res;
+  }
+
+  return res.transactionHash;
 };

@@ -3,7 +3,7 @@ import path from 'path';
 import chalk from 'chalk';
 
 import { logger } from '../utils/logger';
-import { createObject, createFolder } from './object';
+import { createObject, createFolder, deleteObject } from './object';
 import { createBucket } from './bucket';
 
 const BUCKET_NAME = process.env.BUCKET_NAME || '';
@@ -67,5 +67,22 @@ export const upload = async (filePath: string) => {
     logger.info('File upload completed => baseUrl:', chalk.green(url));
   } catch (error) {
     logger.error('File upload failed:', error);
+  }
+};
+
+export const deleteFile = async (objectName: string) => {
+  try {
+    logger.info('Deleting an object for', chalk.cyan(objectName));
+
+    const bucketName = BUCKET_NAME;
+
+    const res = await deleteObject({
+      bucketName,
+      objectName,
+    });
+
+    logger.info('Object deleted successfully:', objectName, res);
+  } catch (error) {
+    logger.error('Object delete failed:', error);
   }
 };
