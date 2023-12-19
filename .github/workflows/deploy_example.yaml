@@ -57,4 +57,16 @@ jobs:
         env:
           ACCOUNT_ADDRESS: ${{ secrets.GH_TESTNET_ACCOUNT }}
           ACCOUNT_PRIVATE_KEY: ${{ secrets.GH_TESTNET_PRIVATE_KEY }}
-          BUCKET_NAME: ${{ secrets.GH_TESTNET_BUCKET_NAME }}
+          BUCKET_NAME: cra-example
+
+      - name: notify comment
+        uses: peter-evans/create-or-update-comment@v2
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          # you can find the preview url at testnet.dcellar.io
+          body: |
+            Deployment is successfully!
+            Preview URL - https://gnfd-testnet-sp3.nodereal.io/view/cra-example/build/index.html
+          reactions: rocket
