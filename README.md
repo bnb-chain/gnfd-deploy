@@ -71,6 +71,10 @@ GREENFIELD_CHAIN_ID=5600
 [INFO]: File upload completed => baseUrl: https://gnfd-testnet-sp3.nodereal.io/view/testcli1/test.txt
 ```
 
+### Upload File via GitHub Workflow
+
+If you want to upload your website to Greenfield using GitHub Actions directly, you can find an example [here](./.github/workflows/deploy_cra_example.yaml).
+
 ## Contributing
 
 If you want to contribute to GNFD Deploy or have suggestions, feel free to open an issue or submit a pull request.
