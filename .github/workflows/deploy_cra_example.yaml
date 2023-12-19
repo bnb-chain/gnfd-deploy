@@ -1,16 +1,13 @@
-name: Deploy Example to Greenfield
+name: Deploy CRA Example to Greenfield
 
 on:
-  pull_request:
-    types:
-      - opened # TODO: for test only
-      - synchronize
-    branches:
-      - examples
+  issue_comment:
+    types: [created]
 
 jobs:
-  cache-and-install:
+  examples-ci-cd:
     runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, "/deploy:cra-example") }}
     defaults:
       run:
         working-directory: examples/cra
@@ -46,16 +43,27 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: build
-        run: pnpm build
+      - name: build static website
+        run: PUBLIC_URL=./ GENERATE_SOURCEMAP=false pnpm build
 
       - name: upload to Greenfield network
         run: |
           pnpm add @bnb-chain/gnfd-deploy -D
           npx gnfd --delete build/index.html
           npx gnfd build
-          npx gnfd public
         env:
           ACCOUNT_ADDRESS: ${{ secrets.GH_TESTNET_ACCOUNT }}
           ACCOUNT_PRIVATE_KEY: ${{ secrets.GH_TESTNET_PRIVATE_KEY }}
-          BUCKET_NAME: ${{ secrets.GH_TESTNET_BUCKET_NAME }}
+          BUCKET_NAME: cra-example
+
+      - name: notify comment
+        uses: peter-evans/create-or-update-comment@v2
+        env:
+          GITHUB_TOKEN: '${{ secrets.GITHUB_TOKEN }}'
+        with:
+          issue-number: ${{ github.event.pull_request.number }}
+          # you can find the preview url at testnet.dcellar.io
+          body: |
+            Deployment successful!
+            Preview URL - https://gnfd-testnet-sp1.nodereal.io/view/cra-example/build/index.html
+          reactions: rocket
