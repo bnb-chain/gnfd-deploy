@@ -1,16 +1,13 @@
-name: Deploy Example to Greenfield
+name: Deploy CRA Example to Greenfield
 
 on:
-  pull_request:
-    types:
-      - opened # TODO: for test only
-      - synchronize
-    branches:
-      - examples
+  issue_comment:
+    types: [created]
 
 jobs:
   examples-ci-cd:
     runs-on: ubuntu-latest
+    if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, "/deploy:cra-example") }}
     defaults:
       run:
         working-directory: examples/cra
