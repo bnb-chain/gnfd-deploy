@@ -35,7 +35,7 @@ Options:
   -h, --help             display help for command
 ```
 
-## Using Environment Variables (Optional)
+### Using Environment Variables (Optional)
 
 Set the following environment variables based on the information in the [env.example](./.env.example) file:
 
