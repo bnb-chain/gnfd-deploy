@@ -9,7 +9,7 @@ on:
       - examples
 
 jobs:
-  cache-and-install:
+  examples-ci-cd:
     runs-on: ubuntu-latest
     defaults:
       run:
