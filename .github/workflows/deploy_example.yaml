@@ -67,6 +67,6 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           # you can find the preview url at testnet.dcellar.io
           body: |
-            Deployment is successfully!
-            Preview URL - https://gnfd-testnet-sp3.nodereal.io/view/cra-example/build/index.html
+            Deployment successful!
+            Preview URL - https://gnfd-testnet-sp1.nodereal.io/view/cra-example/build/index.html
           reactions: rocket
