@@ -1,14 +1,15 @@
 import fs from 'fs';
 import path from 'path';
 import mimeTypes from 'mime-types';
-import { getCheckSums } from '@bnb-chain/greenfiled-file-handle';
 import chalk from 'chalk';
 
 import { client } from '../utils/client';
 import { logger } from '../utils/logger';
+import { ReedSolomon } from '@bnb-chain/reed-solomon';
 
 const ACCOUNT_ADDRESS = process.env.ACCOUNT_ADDRESS || '';
 const ACCOUNT_PRIVATE_KEY = process.env.ACCOUNT_PRIVATE_KEY || '';
+const rs = new ReedSolomon();
 
 export const createObject = async ({
   filePath,
@@ -23,10 +24,8 @@ export const createObject = async ({
   const extname = path.extname(filePath);
   const fileType = mimeTypes.lookup(extname);
 
-  logger.debug('check sums start:', filePath);
-  const hashResult = await getCheckSums(fileBuffer);
-  const { contentLength, expectCheckSums } = hashResult;
-  logger.debug('check sums end:', filePath);
+  const expectCheckSums = rs.encode(new Uint8Array(fileBuffer));
+  const contentLength = fileBuffer.length;
 
   try {
     logger.info('Checking an object for', chalk.cyan(objectName));
@@ -48,7 +47,7 @@ export const createObject = async ({
         fileType: fileType as string,
         redundancyType: 'REDUNDANCY_EC_TYPE',
         contentLength,
-        expectCheckSums: JSON.parse(expectCheckSums),
+        expectCheckSums,
       },
       {
         type: 'ECDSA',
